@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useState} from 'react'
 import SectionWrapper from './SectionWrapper'
 import { WORKOUTS } from '../utils/swoldier';
 
@@ -18,6 +18,15 @@ function Header(props) {
 }
 
 export default function Generator() {
+
+  const [showModal,setShowModal] = useState(false);
+  // let showModal = false;
+
+  function toggleModal() {
+    setShowModal(!showModal);
+  }
+
+
   return (
     <SectionWrapper header={"generate your workout chekc for"} title={['It\'s','Huge','o\'clock']}>
       <Header index={"01"} title={"will be replaced somehow test"} description={'select the workout you wish to endure'} />
@@ -30,15 +39,15 @@ export default function Generator() {
         )
       })}
       </div>
-      <Header index={"02"} title={"i dont have clue what to write here"} description={'select the workout you wish to endure'} />
-      <div className='grid grid-cols2 sm:grid-cols-4 gap-4'>
-      {Object.keys(WORKOUTS).map((type,typeIndex) => {
-        return (
-          <button className='bg-slate-950 border border-blue-400 py-3 rounded-lg duration-200 hover:border-blue-600' key={typeIndex}>
-            <p className='capitalize'>{type.replaceAll('_'," ")}</p>
-          </button>
-        )
-      })}
+      <Header index={"02"} title={"Lock on targets"} description={'select the muscles judged for annihilation'} />
+      <div className='flex flex-col bg-slate-950  border border-solid border-blue-400 rounded-lg'>
+        <button onClick={toggleModal} className='relative flex item-center p-3 justify-center'>
+          <p>Select muscle grups</p>
+          <i className="fa-solid fa-caret-down absolute right-3 top-1/2 -translate-y-1/2 "></i>
+        </button>
+        {showModal && (
+          <div>modal</div>
+        )}
       </div>
     </SectionWrapper>
   )
