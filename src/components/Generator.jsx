@@ -1,6 +1,7 @@
 import React,{useState} from 'react'
 import SectionWrapper from './SectionWrapper'
 import { SCHEMES, WORKOUTS } from '../utils/swoldier';
+import Button from './Button';
 
 function Header(props) {
 
@@ -35,18 +36,21 @@ export default function Generator() {
       setMuscles(muscles.filter(val => val !== muscleGroup))
     }
 
-    if(muscles.length > 3) {
+    if(muscles.length > 2) {
       return 
     }
 
     if(poison !== 'individual') {
       setMuscles([muscleGroup])
-   
       return
     }
 
 
     setMuscles([...muscles,muscleGroup])
+
+    if(muscles.length === 2) {
+      setShowModal(false)
+    }
   }
 
 
@@ -58,6 +62,7 @@ export default function Generator() {
       {Object.keys(WORKOUTS).map((type,typeIndex) => {
         return (
           <button onClick={() => {
+            setMuscles([])
             setPoison(type)
           }} className={'bg-slate-950 border py-3 rounded-lg duration-200 hover:border-blue-600 ' + (type === poison ? 'border-blue-400' : 'border-blue-600')} key={typeIndex}>
             <p className='capitalize'>{type.replaceAll('_'," ")}</p>
@@ -68,13 +73,13 @@ export default function Generator() {
       <Header index={"02"} title={"Lock on targets"} description={'select the muscles judged for annihilation'} />
       <div className='flex flex-col bg-slate-950  border border-solid border-blue-400 rounded-lg'>
         <button onClick={toggleModal} className='relative flex item-center p-3 justify-center'>
-          <p>Select muscle grups</p>
+          <p className='capitalize'>{muscles.length === 0 ? 'Select muscle grups' : muscles.join(' ')}</p>
           <i className="fa-solid fa-caret-down absolute right-3 top-1/2 -translate-y-1/2 "></i>
         </button>
         {showModal && (
           <div className='flex flex-col p-3'>
             {(poison === 'individual' ? WORKOUTS[poison] : Object.keys(WORKOUTS[poison])).map((muscleGroup,muscleGroupIndex) => {
-              return <button oncClick={() => {
+              return <button onClick={() => {
                 updateMuscles(muscleGroup)
               }} className={' duration-200 ' + (muscles.includes(muscleGroup) ? 'text-blue-400' : '')} key={muscleGroupIndex}>
                   <p className='uppercase'>{muscleGroup}</p>
@@ -95,6 +100,7 @@ export default function Generator() {
         )
       })}
       </div>
+    <Button text={"Formulate"}></Button>
     </SectionWrapper>
   )
 }
