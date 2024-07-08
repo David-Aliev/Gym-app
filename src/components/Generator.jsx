@@ -58,7 +58,7 @@ export default function Generator(props) {
 
 
   return (
-    <SectionWrapper header={"generate your workout chekc for"} title={['It\'s','Huge','o\'clock']}>
+    <SectionWrapper id={'generate'} header={"generate your workout chekc for"} title={['It\'s','Huge','o\'clock']}>
       <Header index={"01"} title={"Make your choice"} description={'select the workout you wish to endure'} />
       <div className='grid grid-cols2 sm:grid-cols-4 gap-4'>
       {Object.keys(WORKOUTS).map((type,typeIndex) => {
